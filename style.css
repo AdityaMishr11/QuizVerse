@@ -1,0 +1,134 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6A11CB, #2575FC);
+    color: white;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+}
+
+header {
+    display: flex;
+    justify-content: flex-start; /* Align logo to the left */
+    align-items: center;
+    padding: 20px 0;
+    height: 60px; /* Give header a fixed height */
+}
+
+.logo {
+    height: 100px; /* Adjusted logo size */
+}
+
+.hidden {
+    display: none;
+}
+
+.landing-page .content, .scoreboard-screen .content {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.illustration {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.start-quiz-btn, .btn {
+    background: #FFC107;
+    color: #333;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.start-quiz-btn:hover, .btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Quiz Screen */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+#progress-bar {
+    width: 60%;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progress-bar-full {
+    height: 100%;
+    width: 0%;
+    background-color: #A7FFEB;
+    transition: width 0.5s ease;
+}
+
+#question-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+#question-text {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 15px;
+}
+
+.btn.correct {
+    background: #A7FFEB;
+    color: #333;
+}
+
+.btn.incorrect {
+    background: #FF4B5C;
+}
