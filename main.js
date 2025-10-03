@@ -5,6 +5,14 @@ let questionNumber = 0;
 let currentQuestionIndex = 0;
 let timeLeft = 30;
 let timerInterval;
+let attemptCount = 0;
+
+// Initialize attempt counter for this browser session
+try {
+    if (sessionStorage.getItem('quizverse_attempt_count_v1') === null) {
+        sessionStorage.setItem('quizverse_attempt_count_v1', '0');
+    }
+} catch {}
 
 const landingPage = document.getElementById('landing-page');
 const quizScreen = document.getElementById('quiz-screen');
@@ -17,6 +25,8 @@ const timer = document.getElementById('timer');
 const questionText = document.getElementById('question-text');
 const answerButtons = document.getElementById('answer-buttons');
 const scoreText = document.getElementById('score-text');
+const topCta = document.querySelector('.top-cta');
+const attemptsEl = document.getElementById('attempts');
 
 startQuizBtn.addEventListener('click', startGame);
 playAgainBtn.addEventListener('click', () => {
@@ -24,9 +34,34 @@ playAgainBtn.addEventListener('click', () => {
     landingPage.classList.remove('hidden');
 });
 
+// Mobile-friendly tooltip toggle on tap
+if (topCta) {
+    let tooltipVisible = false;
+    topCta.addEventListener('click', (e) => {
+        const isTouch = matchMedia('(hover: none)').matches;
+        if (isTouch) {
+            e.preventDefault();
+            tooltipVisible = !tooltipVisible;
+            if (tooltipVisible) {
+                topCta.classList.add('tooltip-visible');
+            } else {
+                topCta.classList.remove('tooltip-visible');
+            }
+        }
+    });
+    // Hide tooltip when clicking outside
+    document.addEventListener('click', (e) => {
+        const isTouch = matchMedia('(hover: none)').matches;
+        if (isTouch && tooltipVisible && !topCta.contains(e.target)) {
+            tooltipVisible = false;
+            topCta.classList.remove('tooltip-visible');
+        }
+    }, true);
+}
+
 async function fetchQuestions() {
     try {
-        const response = await fetch('https://opentdb.com/api.php?amount=5&type=multiple');
+        const response = await fetch('https://opentdb.com/api.php?amount=10');
         const data = await response.json();
         questions = data.results.map(apiQuestion => {
             const formattedQuestion = {
@@ -145,5 +180,66 @@ function startTimer() {
 function showScoreboard() {
     quizScreen.classList.add('hidden');
     scoreboardScreen.classList.remove('hidden');
-    scoreText.innerText = `You scored ${score} out of ${questions.length}!`;
+    attemptCount = getAttemptCount() + 1; // display next attempt number
+    scoreText.innerHTML = `Attempt #<strong>${attemptCount}</strong>: You scored <strong>${score}</strong> out of <strong>${questions.length}</strong>!`;
+    saveAttempt({ attempt: attemptCount, score, total: questions.length, date: Date.now() });
+    incrementAttemptCount(); // persist the increment after displaying/saving
+    renderAttemptsHistory();
+}
+
+
+// Attempts history (sessionStorage-based)
+const ATTEMPTS_KEY = 'quizverse_attempts_v1';
+const ATTEMPT_KEY = 'quizverse_attempt_count_v1';
+
+function loadAttempts() {
+    try {
+        const raw = sessionStorage.getItem(ATTEMPTS_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveAttempts(entries) {
+    try {
+        sessionStorage.setItem(ATTEMPTS_KEY, JSON.stringify(entries));
+    } catch {}
+}
+
+function saveAttempt(entry) {
+    const entries = loadAttempts();
+    entries.unshift(entry); // latest first
+    const capped = entries.slice(0, 10); // keep last 10 attempts
+    saveAttempts(capped);
+}
+
+function renderAttemptsHistory() {
+    if (!attemptsEl) return;
+    const entries = loadAttempts();
+    if (!entries.length) {
+        attemptsEl.innerHTML = '';
+        return;
+    }
+    const items = entries.map((e) => {
+        const percent = Math.round((e.score / e.total) * 100);
+        return `<li><span>Attempt ${e.attempt}</span><span>${e.score}/${e.total} (${percent}%)</span></li>`;
+    }).join('');
+    attemptsEl.innerHTML = `<h2>Your Attempts</h2><ul>${items}</ul>`;
+}
+
+function getAttemptCount() {
+    try {
+        const raw = sessionStorage.getItem(ATTEMPT_KEY);
+        return raw ? parseInt(raw, 10) || 0 : 0;
+    } catch {
+        return 0;
+    }
+}
+
+function incrementAttemptCount() {
+    try {
+        const current = getAttemptCount();
+        sessionStorage.setItem(ATTEMPT_KEY, String(current + 1));
+    } catch {}
 }
