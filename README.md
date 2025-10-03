@@ -23,7 +23,7 @@ With a **30-second timer per question**, smooth UI, and instant feedback, QuizVe
 
 ## ✨ Features  
 
-- 🎲 **Dynamic Questions** – Fetches 5 new multiple-choice questions from [Open Trivia DB](https://opentdb.com/) each time.  
+- 🎲 **Dynamic Questions** – Fetches 10 new multiple-choice questions from [Open Trivia DB](https://opentdb.com/) each time.  
 - ⏱️ **30-Second Timer** – Keeps the quiz challenging and fast-paced.  
 - ⚡ **Instant Feedback** – Shows correct/incorrect answers immediately.  
 - 🏆 **Final Scoreboard** – Displays the total score at the end of the quiz.  
