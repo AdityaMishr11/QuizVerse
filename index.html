@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://i.ibb.co/VvWjV9B/quizverse-logo.png" alt="QuizVerse Logo" class="logo">
+        </header>
+        <main>
+            <div id="landing-page" class="landing-page">
+                <div class="content">
+                    <img src="https://storage.googleapis.com/agent-tools-dev-530921c5/images/quiz-illustration.svg" alt="Quiz Illustration" class="illustration">
+                    <h1>Welcome to QuizVerse</h1>
+                    <p>An engaging and futuristic learning experience.</p>
+                    <button id="start-quiz-btn" class="start-quiz-btn">Start Quiz</button>
+                </div>
+            </div>
+
+            <div id="quiz-screen" class="hidden">
+                <div class="quiz-header">
+                    <div id="question-counter"></div>
+                    <div id="progress-bar">
+                        <div id="progress-bar-full"></div>
+                    </div>
+                    <div id="timer"></div>
+                </div>
+                <div id="question-container">
+                    <h2 id="question-text"></h2>
+                    <div id="answer-buttons" class="btn-grid">
+                        <button class.btn"></button>
+                        <button class="btn"></button>
+                        <button class="btn"></button>
+                        <button class="btn"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="scoreboard-screen" class="hidden">
+                <div class="content">
+                    <h1>Quiz Complete!</h1>
+                    <p id="score-text"></p>
+                    <button id="play-again-btn" class="start-quiz-btn">Play Again</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
